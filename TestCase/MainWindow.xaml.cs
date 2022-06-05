@@ -40,12 +40,14 @@ namespace TestCase
 
         private async void OnGoButtonClick(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                Browser.Source = MakeUri(Source.Text);
+            Uri uri;
+            if (MakeUri(Source.Text, out uri))
+            { 
+                
+                Browser.Source = uri;
                 Browser.GoForward();
             }
-            catch
+            else
             {
                 ContentDialog invalideSourceDialog = new ContentDialog
                 {
@@ -58,15 +60,23 @@ namespace TestCase
             }
         }
 
-        private Uri MakeUri(string source)
+        private bool MakeUri(string source, out Uri uri)
         {
-            if (!source.Contains("http://") && !source.Contains("https://"))
+            try
             {
-                source = "https://" + source;
+                if (!source.Contains("http://") && !source.Contains("https://"))
+                {
+                    source = "https://" + source;
+                }
+                uri = new Uri(source);
+                Source.Text = source;
+                return true;
             }
-            var result = new Uri(source);
-            Source.Text = source;
-            return result;
+            catch
+            {
+                uri = null;
+                return false;
+            }
         }
     }
 }

@@ -80,7 +80,6 @@ namespace TestCase
             Application.Current.Exit();
         }
 
-
         private Window _mWindow;
     }
 }
