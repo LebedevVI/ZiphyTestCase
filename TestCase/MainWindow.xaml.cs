@@ -60,7 +60,7 @@ namespace TestCase
             }
         }
 
-        private bool MakeUri(string source, out Uri uri)
+        public bool MakeUri(string source, out Uri uri)
         {
             try
             {

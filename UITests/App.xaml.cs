@@ -17,14 +17,12 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
-using Windows.UI.Popups;
-
-using System.Threading;
-
+using Microsoft.VisualStudio.TestTools.UnitTesting.AppContainer;
+;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
-namespace TestCase
+namespace UITests
 {
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.
@@ -40,44 +38,15 @@ namespace TestCase
             InitializeComponent();
         }
 
-        /// <summary>
-        /// Invoked when the application is launched normally by the end user.  Other entry points
-        /// will be used such as when the application is launched to open a specific file.
-        /// </summary>
-        /// <param name="args">Details about the launch request and process.</param>
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
+            Microsoft.VisualStudio.TestPlatform.TestExecutor.UnitTestClient.CreateDefaultUI();
+
             _mWindow = new MainWindow();
             _mWindow.Activate();
-            if (!MutexCheck())
-            {
-                if (_mWindow.Content is FrameworkElement fe)
-                {
-                    fe.Loaded += (ss, ee) => MultiAppError();
-                }
 
-            }
-        }
-
-        static Mutex Mutex;
-        public static bool MutexCheck()
-        {
-            bool isNew;
-            Mutex = new Mutex(true, "TestCaseZiphy", out isNew);
-            return isNew;
-        }
-
-        protected async void MultiAppError()
-        {
-            ContentDialog multiAppDialog = new ContentDialog
-            {
-                Title = "Программа уже запущена",
-                Content = "Закройте и попробуйте вновь",
-                CloseButtonText = "Ok"
-            };
-            multiAppDialog.XamlRoot = _mWindow.Content.XamlRoot;
-            ContentDialogResult result = await multiAppDialog.ShowAsync();
-            Application.Current.Exit();
+            //UITestMethodAttribute.DispatcherQueue = _mWindow.DispatcherQueue;
+            Microsoft.VisualStudio.TestPlatform.TestExecutor.UnitTestClient.Run(Environment.CommandLine);
         }
 
         private Window _mWindow;
