@@ -52,7 +52,7 @@ namespace TestCase
                 ContentDialog invalideSourceDialog = new ContentDialog
                 {
                     Title = "Некорректный адрес",
-                    Content = "Закройте и попробуйте вновь",
+                    Content = "Проверьте правильность ввода",
                     CloseButtonText = "Ok"
                 };
                 invalideSourceDialog.XamlRoot = this.Content.XamlRoot;

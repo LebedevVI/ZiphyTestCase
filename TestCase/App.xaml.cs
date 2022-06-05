@@ -71,8 +71,8 @@ namespace TestCase
         {
             ContentDialog multiAppDialog = new ContentDialog
             {
-                Title = "Программа уже запущена!",
-                Content = "Программа уже запущена! Закройте и попробуйте вновь",
+                Title = "Программа уже запущена",
+                Content = "Закройте и попробуйте вновь",
                 CloseButtonText = "Ok"
             };
             multiAppDialog.XamlRoot = _mWindow.Content.XamlRoot;
